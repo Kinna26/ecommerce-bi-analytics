@@ -1,0 +1,31 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["analytics dim_campaign","analytics dim_customer","analytics dim_date","analytics fact_marketing","analytics fact_payments","analytics fact_sales","analytics fact_support","analytics dim_product","analytics fact_delivery"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'analytics dim_campaign'
+ref table DateTableTemplate_9637fa6d-0694-448b-9405-fbe62ac9779a
+ref table LocalDateTable_30bf2da8-cccb-4e4b-9d1e-70de5239e878
+ref table LocalDateTable_6da53fed-d2e0-4888-b53d-b03c879a1904
+ref table 'analytics dim_customer'
+ref table LocalDateTable_e911bdde-6190-4744-92c0-0490d90a8dad
+ref table 'analytics dim_date'
+ref table LocalDateTable_8bae7c7a-8999-40c9-a0d2-248f66cd876a
+ref table 'analytics fact_marketing'
+ref table 'analytics fact_payments'
+ref table 'analytics fact_sales'
+ref table 'analytics fact_support'
+ref table 'analytics dim_product'
+ref table 'analytics fact_delivery'
+
+ref cultureInfo en-US
+

@@ -1,0 +1,105 @@
+table 'analytics fact_marketing'
+	lineageTag: 609a0bed-fdb1-4f58-99d8-65f908a1a58f
+
+	measure 'Total Marketing Spend' =
+			
+			SUM('analytics fact_marketing'[spend])
+		lineageTag: 27d56bf5-9b79-49e5-87a2-257947d73b8b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Conversion Rate' =
+			
+			DIVIDE(
+			    SUM('analytics fact_marketing'[conversions]),
+			    SUM('analytics fact_marketing'[clicks])
+			)
+		lineageTag: e7b3576b-7e35-4156-a18c-601b5d223693
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column marketing_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ae4489d1-1835-432a-98ba-92c988560d77
+		summarizeBy: sum
+		sourceColumn: marketing_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 2adc20d9-dfa8-4352-b8c0-87fb7a200667
+		summarizeBy: none
+		sourceColumn: campaign_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 950710e6-86f1-4bfc-a385-4af53c4125a3
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column spend
+		dataType: double
+		lineageTag: 859364e8-26b1-4713-8c7f-7983d773554d
+		summarizeBy: sum
+		sourceColumn: spend
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column impressions
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b8394d7-c2bd-465c-b236-0fb1609b69c6
+		summarizeBy: sum
+		sourceColumn: impressions
+
+		annotation SummarizationSetBy = Automatic
+
+	column clicks
+		dataType: int64
+		formatString: 0
+		lineageTag: 70cbe608-2b94-4216-963d-d2fa1d8fd666
+		summarizeBy: sum
+		sourceColumn: clicks
+
+		annotation SummarizationSetBy = Automatic
+
+	column conversions
+		dataType: int64
+		formatString: 0
+		lineageTag: 22cbbdb5-c9bb-46f7-b8ec-bffcbb868f6a
+		summarizeBy: sum
+		sourceColumn: conversions
+
+		annotation SummarizationSetBy = Automatic
+
+	column revenue
+		dataType: double
+		lineageTag: 9d083157-e994-4a5f-8232-a9b0ba0eb632
+		summarizeBy: sum
+		sourceColumn: revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'analytics fact_marketing' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "shopsphere"),
+				    analytics_fact_marketing = Source{[Schema="analytics",Item="fact_marketing"]}[Data]
+				in
+				    analytics_fact_marketing
+
+	annotation PBI_ResultType = Table
+

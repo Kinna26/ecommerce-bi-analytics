@@ -1,0 +1,93 @@
+table 'analytics fact_delivery'
+	lineageTag: f4004055-b22a-4115-a9f6-980ac7632928
+
+	column delivery_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 93a0cfa3-4aaf-49e8-a748-79c713cf842d
+		summarizeBy: sum
+		sourceColumn: delivery_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a40db9e-f94c-4c5b-8f45-20e6050dcfe3
+		summarizeBy: sum
+		sourceColumn: delivery_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: a1837c31-e745-4015-bd7f-2d8b86e1117c
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 2e802d9a-c0de-48e9-a5cf-e8b31a8aab0a
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: f076f9e7-e2da-4733-b766-585146070b55
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_partner
+		dataType: string
+		lineageTag: 6984ab4e-3511-49bd-9ff0-b4b467f5673f
+		summarizeBy: none
+		sourceColumn: delivery_partner
+
+		annotation SummarizationSetBy = Automatic
+
+	column promised_days
+		dataType: int64
+		formatString: 0
+		lineageTag: f6e63e3c-5b63-4e01-8a57-6103ea8cbcb1
+		summarizeBy: sum
+		sourceColumn: promised_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_delivery_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 62ed61d7-8b45-4a7c-9b04-8dc9946c7d67
+		summarizeBy: sum
+		sourceColumn: actual_delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_status
+		dataType: string
+		lineageTag: a26337a8-726f-4a34-b76e-efca1fe9c944
+		summarizeBy: none
+		sourceColumn: delivery_status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'analytics fact_delivery' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "shopsphere"),
+				    analytics_fact_delivery = Source{[Schema="analytics",Item="fact_delivery"]}[Data]
+				in
+				    analytics_fact_delivery
+
+	annotation PBI_ResultType = Table
+

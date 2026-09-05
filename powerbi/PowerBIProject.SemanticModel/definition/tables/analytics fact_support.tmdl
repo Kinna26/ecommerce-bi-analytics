@@ -1,0 +1,110 @@
+table 'analytics fact_support'
+	lineageTag: 1bde5b2b-e2fb-4c4a-8e55-f6781c5dde4c
+
+	measure 'Average CSAT' =
+			
+			AVERAGE('analytics fact_support'[satisfaction_score])
+		lineageTag: 2886f8bf-92e1-4254-b084-95ab991df5d0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ticket_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e4ae786-57b4-48f8-a725-39c3aed8fc52
+		summarizeBy: sum
+		sourceColumn: ticket_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticket_id
+		dataType: int64
+		formatString: 0
+		lineageTag: facf6d23-cb7e-4923-9518-5e9c0757466b
+		summarizeBy: sum
+		sourceColumn: ticket_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d9bda6c-a2dc-47c4-a5a6-3a5cd0e051e3
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: e6cfaa27-1e49-43ec-823a-ee453a9bbf21
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d3e4bfb-9021-4e34-9ff2-5b8736d1af22
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column issue_type
+		dataType: string
+		lineageTag: 01f1b7d4-de75-4ab2-bd95-48af46d78b06
+		summarizeBy: none
+		sourceColumn: issue_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column priority
+		dataType: string
+		lineageTag: 5ef0ae81-f633-4bdd-b7bc-e60f7ffc6e17
+		summarizeBy: none
+		sourceColumn: priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column resolution_time_hours
+		dataType: double
+		lineageTag: 0e5f713c-be0e-4b83-a0b6-b97d96ce5808
+		summarizeBy: sum
+		sourceColumn: resolution_time_hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column satisfaction_score
+		dataType: double
+		lineageTag: f133a0cd-dfc9-4cad-abb5-a9d1e3ae821c
+		summarizeBy: sum
+		sourceColumn: satisfaction_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ticket_status
+		dataType: string
+		lineageTag: 1f48256d-9595-4d92-b043-ed2e31036039
+		summarizeBy: none
+		sourceColumn: ticket_status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'analytics fact_support' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "shopsphere"),
+				    analytics_fact_support = Source{[Schema="analytics",Item="fact_support"]}[Data]
+				in
+				    analytics_fact_support
+
+	annotation PBI_ResultType = Table
+

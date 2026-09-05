@@ -1,0 +1,123 @@
+{
+  "name": "ShopSphere Dark",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#0F172A"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#0F172A"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "cardVisual": {
+      "*": {
+        "referenceLabel": [
+          {
+            "backgroundColor": {
+              "solid": {
+                "color": "#162338"
+              }
+            },
+            "backgroundTransparency": 100,
+            "paddingUniform": 2,
+            "$id": "default"
+          }
+        ],
+        "layout": [
+          {
+            "cellPadding": 4,
+            "paddingIndividual": false,
+            "paddingUniform": 0,
+            "backgroundShow": true,
+            "$id": "default"
+          }
+        ],
+        "value": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#F8FAFC"
+              }
+            },
+            "bold": true,
+            "fontSize": 28,
+            "$id": "default"
+          }
+        ],
+        "label": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#CBD5E1"
+              }
+            },
+            "show": true,
+            "fontSize": 10,
+            "$id": "default"
+          }
+        ],
+        "fillCustom": [
+          {
+            "show": true,
+            "fillColor": {
+              "solid": {
+                "color": "#162338"
+              }
+            },
+            "transparency": 0,
+            "$id": "default"
+          }
+        ],
+        "shapeCustomRectangle": [
+          {
+            "tileShape": "rectangleRounded",
+            "rectangleRoundedCurve": 10,
+            "$id": "default"
+          }
+        ],
+        "referenceLabelLayout": [
+          {
+            "backgroundTransparency": 100
+          }
+        ]
+      }
+    }
+  },
+  "textClasses": {
+    "label": {
+      "color": "#F8FAFC"
+    }
+  },
+  "dataColors": [
+    "#38BDF8",
+    "#38BDF8",
+    "#22C55E",
+    "#F59E0B",
+    "#EF4444",
+    "#A78BFA",
+    "#94A3B8",
+    "#F8FAFC"
+  ],
+  "bad": "#EF4444",
+  "neutral": "#94A3B8",
+  "good": "#22C55E"
+}

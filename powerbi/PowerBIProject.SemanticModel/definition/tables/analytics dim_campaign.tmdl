@@ -1,0 +1,90 @@
+table 'analytics dim_campaign'
+	lineageTag: b5a8a480-00d1-491e-a71e-6db1ee5c25f0
+
+	column campaign_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 2e81a1ca-eb52-4468-ac57-fc809e58458a
+		summarizeBy: none
+		sourceColumn: campaign_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c3c90f9-d3e6-4171-b271-4d1fcde9f01c
+		summarizeBy: sum
+		sourceColumn: campaign_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_name
+		dataType: string
+		lineageTag: 69dd55cc-27b2-4929-b780-f300bb827418
+		summarizeBy: none
+		sourceColumn: campaign_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel
+		dataType: string
+		lineageTag: 95b0209b-2473-4396-967d-61ccbb5bf47c
+		summarizeBy: none
+		sourceColumn: channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d38e8fe3-c110-4f28-9d97-ceedcac739e8
+		summarizeBy: none
+		sourceColumn: start_date
+
+		variation Variation
+			isDefault
+			relationship: 41395a4c-413c-4152-8159-dd1c5f18ce8c
+			defaultHierarchy: LocalDateTable_30bf2da8-cccb-4e4b-9d1e-70de5239e878.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column end_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: aa48ad6d-74e8-4789-a1df-57e9ae1006b2
+		summarizeBy: none
+		sourceColumn: end_date
+
+		variation Variation
+			isDefault
+			relationship: 1bc0dfe6-eb23-4bdc-a68e-1d4415206a88
+			defaultHierarchy: LocalDateTable_6da53fed-d2e0-4888-b53d-b03c879a1904.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column budget
+		dataType: double
+		lineageTag: fbc14fc9-1327-47ce-b063-35566800ee6f
+		summarizeBy: sum
+		sourceColumn: budget
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'analytics dim_campaign' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "shopsphere"),
+				    analytics_dim_campaign = Source{[Schema="analytics",Item="dim_campaign"]}[Data]
+				in
+				    analytics_dim_campaign
+
+	annotation PBI_ResultType = Table
+

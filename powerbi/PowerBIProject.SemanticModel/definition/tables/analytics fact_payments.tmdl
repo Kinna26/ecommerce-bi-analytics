@@ -1,0 +1,85 @@
+table 'analytics fact_payments'
+	lineageTag: f5151e86-406c-41bc-9b1b-0e9e7bc172dd
+
+	column payment_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ba9198b-ee66-45a9-99a4-e46cbcfb249c
+		summarizeBy: sum
+		sourceColumn: payment_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d8f68744-3174-4e49-ac4a-3101514c083d
+		summarizeBy: sum
+		sourceColumn: payment_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c5b99c6-03e2-4a7e-aae8-a19d9c12c756
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 8b9f4468-fcd6-41ff-9155-14e352d148b8
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: f48a560b-c223-43d3-b4f9-ee2d48c7304b
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_method
+		dataType: string
+		lineageTag: d9df1459-c0fb-4052-b53c-fd85ea99f4b9
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_status
+		dataType: string
+		lineageTag: b9a4ff05-f051-4c89-bb62-53046da932af
+		summarizeBy: none
+		sourceColumn: payment_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: double
+		lineageTag: d3d4a4cc-ba45-400f-9254-45da6a62fad0
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'analytics fact_payments' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "shopsphere"),
+				    analytics_fact_payments = Source{[Schema="analytics",Item="fact_payments"]}[Data]
+				in
+				    analytics_fact_payments
+
+	annotation PBI_ResultType = Table
+

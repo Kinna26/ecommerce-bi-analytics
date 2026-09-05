@@ -1,0 +1,96 @@
+table 'analytics dim_customer'
+	lineageTag: d655eb14-7f15-466e-a750-5c93661bded6
+
+	column customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ddda1cc9-6bfc-4305-871b-e5503001372d
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4139820c-5242-4380-acb7-5c8683b41137
+		summarizeBy: sum
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column signup_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f3a1f9dd-28ce-4670-8276-33ff6b7efef1
+		summarizeBy: none
+		sourceColumn: signup_date
+
+		variation Variation
+			isDefault
+			relationship: c7752b4a-9e19-4091-aae9-b9722e2ccbcf
+			defaultHierarchy: LocalDateTable_e911bdde-6190-4744-92c0-0490d90a8dad.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column city
+		dataType: string
+		lineageTag: da6c41af-4027-48cc-b85c-bea1b241a689
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: 94bc6764-6746-423d-b776-333db7be0a44
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: fff49ed3-dc14-40ae-98d8-5ca4be15ea8d
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender
+		dataType: string
+		lineageTag: e28ebfe9-9881-4b14-86ce-adcca13ad8dd
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_segment
+		dataType: string
+		lineageTag: 7dfc86a6-d918-4643-a6ce-638dacb9612f
+		summarizeBy: none
+		sourceColumn: customer_segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column acquisition_channel
+		dataType: string
+		lineageTag: e1275ba5-9149-4544-a492-ceffb1653ff5
+		summarizeBy: none
+		sourceColumn: acquisition_channel
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'analytics dim_customer' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "shopsphere"),
+				    analytics_dim_customer = Source{[Schema="analytics",Item="dim_customer"]}[Data]
+				in
+				    analytics_dim_customer
+
+	annotation PBI_ResultType = Table
+

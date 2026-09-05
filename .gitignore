@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# VS Code
+.vscode/
+
+# Large/generated raw data
+data/raw/
+
+# Power BI temporary files
+**/.pbi/
+**/.pbit
+*.pbix
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

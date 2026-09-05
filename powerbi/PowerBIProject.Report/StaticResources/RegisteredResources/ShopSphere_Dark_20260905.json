@@ -1,0 +1,165 @@
+{
+  "name": "ShopSphere Dark",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#0F172A"
+              }
+            }
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#0F172A"
+              },
+              "transparency": 0
+            }
+          }
+        ]
+      }
+    },
+    "cardVisual": {
+      "*": {
+        "value": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#F8FAFC"
+              }
+            },
+            "bold": true,
+            "fontSize": 28,
+            "$id": "default"
+          }
+        ],
+        "label": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#CBD5E1"
+              }
+            },
+            "show": true,
+            "fontSize": 10,
+            "$id": "default"
+          }
+        ],
+        "title": [
+          {
+            "show": false
+          }
+        ],
+        "padding": [
+          {
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0,
+            "$id": "default"
+          }
+        ],
+        "spacing": [
+          {
+            "verticalSpacing": 3,
+            "$id": "default"
+          }
+        ],
+        "referenceLabel": [
+          {
+            "backgroundColor": {
+              "solid": {
+                "color": "#162338"
+              }
+            },
+            "backgroundTransparency": 100,
+            "paddingUniform": 2,
+            "$id": "default"
+          }
+        ],
+        "layout": [
+          {
+            "cellPadding": 4,
+            "paddingIndividual": false,
+            "paddingUniform": 0,
+            "backgroundShow": true,
+            "$id": "default"
+          }
+        ],
+        "fillCustom": [
+          {
+            "show": true,
+            "fillColor": {
+              "solid": {
+                "color": "#162338"
+              }
+            },
+            "transparency": 0,
+            "$id": "default"
+          }
+        ],
+        "shapeCustomRectangle": [
+          {
+            "tileShape": "rectangleRounded",
+            "rectangleRoundedCurve": 10,
+            "$id": "default"
+          }
+        ],
+        "referenceLabelLayout": [
+          {
+            "backgroundTransparency": 100
+          }
+        ]
+      }
+    }
+  },
+  "textClasses": {
+    "label": {
+      "color": "#F8FAFC",
+      "fontFamily": "Segoe UI",
+      "fontSize": 12
+    },
+    "callout": {
+      "color": "#F8FAFC",
+      "fontFamily": "Segoe UI",
+      "fontSize": 28
+    },
+    "title": {
+      "color": "#F8FAFC",
+      "fontFamily": "Segoe UI",
+      "fontSize": 16
+    },
+    "header": {
+      "color": "#F8FAFC",
+      "fontFamily": "Segoe UI",
+      "fontSize": 18
+    }
+  },
+  "dataColors": [
+    "#38BDF8",
+    "#22C55E",
+    "#F59E0B",
+    "#EF4444",
+    "#A78BFA",
+    "#818CF8",
+    "#94A3B8",
+    "#F8FAFC"
+  ],
+  "good": "#22C55E",
+  "bad": "#EF4444",
+  "neutral": "#94A3B8"
+}

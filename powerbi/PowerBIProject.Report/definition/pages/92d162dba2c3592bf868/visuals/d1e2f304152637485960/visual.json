@@ -1,0 +1,95 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
+  "name": "d1e2f304152637485960",
+  "position": {
+    "x": 18.46153846153846,
+    "y": 8.615384615384615,
+    "z": 19000,
+    "height": 126.76923076923077,
+    "width": 365.53846153846155,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "SHOP",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontStyle": "italic",
+                      "fontSize": "40pt",
+                      "color": "#f8fafc"
+                    }
+                  },
+                  {
+                    "value": "S",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontStyle": "italic",
+                      "fontSize": "40pt",
+                      "color": "#38bdf8"
+                    }
+                  },
+                  {
+                    "value": "PH",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontStyle": "italic",
+                      "fontSize": "40pt",
+                      "color": "#60caf9"
+                    }
+                  },
+                  {
+                    "value": "ER",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontStyle": "italic",
+                      "fontSize": "40pt",
+                      "color": "#88d7fb"
+                    }
+                  },
+                  {
+                    "value": "E",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontStyle": "italic",
+                      "fontSize": "40pt",
+                      "color": "#afe5fc"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Your Shopping, Simplified",
+                    "textStyle": {
+                      "fontStyle": "italic",
+                      "fontSize": "14pt",
+                      "color": "#afe5fc"
+                    }
+                  },
+                  {
+                    "value": ".",
+                    "textStyle": {
+                      "fontStyle": "italic",
+                      "fontSize": "14pt",
+                      "color": "#38bdf8"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,270 @@
+table 'analytics fact_sales'
+	lineageTag: 1371b01d-38b2-48aa-862c-0a4d2e77a5d4
+
+	measure 'Total Orders' = DISTINCTCOUNT('analytics fact_sales'[order_id])
+		lineageTag: 3c24ae4f-a271-412e-8081-66d472d2db63
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AOV = DIVIDE([Total Revenue], [Total Orders])
+		formatString: #,##0.00
+		lineageTag: 94af5fc7-6e33-4a90-b4d7-e3f7ff42d1e6
+
+	measure 'Total Revenue' = SUM('analytics fact_sales'[revenue])
+		lineageTag: 20e9543e-cd5f-4e0c-a31d-96122cbcf3a8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Profit' = SUM('analytics fact_sales'[profit])
+		lineageTag: c0562ae3-5275-4032-b6a0-fc7cfddc6fdf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Margin' = DIVIDE([Total Profit], [Total Revenue])
+		lineageTag: c7ac162a-de95-465a-ab9b-efc6e95856c0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Customers' =
+			
+			DISTINCTCOUNT('analytics dim_customer'[customer_key])
+		formatString: 0
+		lineageTag: 543f81dc-305d-4f75-bfdf-81b79eeab887
+
+	measure 'Cancellation Rate' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        DISTINCTCOUNT('analytics fact_sales'[order_id]),
+			        'analytics fact_sales'[order_status] = "Cancelled"
+			    ),
+			    [Total Orders]
+			)
+		lineageTag: fa5db30d-cf5e-4161-8ac4-f273ffa697fe
+
+	measure 'Payment Failure Rate' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS('analytics fact_payments'),
+			        'analytics fact_payments'[payment_status] = "Failed"
+			    ),
+			    COUNTROWS('analytics fact_payments')
+			)
+		lineageTag: 96663bb7-b5ce-4661-a445-840054e21c47
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'On-Time Delivery Rate' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS('analytics fact_delivery'),
+			        'analytics fact_delivery'[delivery_status] = "On Time"
+			    ),
+			    COUNTROWS('analytics fact_delivery')
+			)
+		lineageTag: 1c432cf7-e9c7-43f1-a240-0fad87b2a016
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue YoY %' =
+			
+			VAR CurrentRevenue = [Total Revenue]
+			VAR PreviousRevenue =
+			    CALCULATE(
+			        [Total Revenue],
+			        DATEADD('analytics dim_date'[date], -1, YEAR)
+			    )
+			RETURN
+			    DIVIDE(CurrentRevenue - PreviousRevenue, PreviousRevenue)
+		formatString: 0.0%;-0.0%;-
+		lineageTag: 6ecc35d0-7833-4928-97e7-b5f39221d039
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Orders YoY %' =
+			
+			VAR CurrentOrders = [Total Orders]
+			VAR PreviousOrders =
+			    CALCULATE(
+			        [Total Orders],
+			        DATEADD('analytics dim_date'[date], -1, YEAR)
+			    )
+			RETURN
+			    DIVIDE(CurrentOrders - PreviousOrders, PreviousOrders)
+		formatString: 0.0%;-0.0%;-
+		lineageTag: 5bb04dc7-325a-4ba8-83c2-22bbb915b3ef
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit YoY %' =
+			
+			VAR CurrentProfit = [Total Profit]
+			VAR PreviousProfit =
+			    CALCULATE(
+			        [Total Profit],
+			        DATEADD('analytics dim_date'[date], -1, YEAR)
+			    )
+			RETURN
+			    DIVIDE(CurrentProfit - PreviousProfit, PreviousProfit)
+		formatString: 0.0%;-0.0%;-
+		lineageTag: 24f83557-c24c-4c3b-9015-1d84d0305ff9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Customers YoY %' =
+			
+			VAR CurrentCustomers = [Total Customers]
+			VAR PreviousCustomers =
+				CALCULATE(
+					[Total Customers],
+					DATEADD('analytics dim_date'[date], -1, YEAR)
+				)
+			RETURN
+				DIVIDE(CurrentCustomers - PreviousCustomers, PreviousCustomers)
+		formatString: 0.0%;-0.0%;-
+		lineageTag: 8d7f5f0e-0a3b-4e2f-9d9a-4f1d5f5d8c12
+
+	column sales_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 9168f5da-6778-4914-9869-af278947bdc9
+		summarizeBy: sum
+		sourceColumn: sales_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 76bdfdf7-5c6c-47a5-9827-d7e78e4fe360
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_item_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4183db18-d392-4d97-9352-c49aac8fd428
+		summarizeBy: sum
+		sourceColumn: order_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ecce2770-3e58-4717-a1fe-db16f8cbb841
+		summarizeBy: none
+		sourceColumn: customer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ddb59fef-127c-4215-ad51-0c85304904cd
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 213b8b71-3369-47eb-a822-3040ccda3e06
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 1438e3ec-ed58-4a38-a5a2-2a0db59995a3
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price
+		dataType: double
+		lineageTag: 38141353-b330-4723-9861-7faf14c79d23
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gross_amount
+		dataType: double
+		lineageTag: 0ef9f000-dd4b-4315-a842-d780f29fc4db
+		summarizeBy: sum
+		sourceColumn: gross_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column discount_amount
+		dataType: double
+		lineageTag: 06700ecc-eeb9-44d6-86b1-519f626163be
+		summarizeBy: sum
+		sourceColumn: discount_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column revenue
+		dataType: double
+		lineageTag: e27c86d0-6366-43c6-8395-f60662cfd57b
+		summarizeBy: sum
+		sourceColumn: revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cost
+		dataType: double
+		lineageTag: 65758962-7857-4a43-9542-d787adf8ff1f
+		summarizeBy: sum
+		sourceColumn: cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column profit
+		dataType: double
+		lineageTag: b9f905c4-79da-4150-aefa-0d8e3dfd2f5c
+		summarizeBy: sum
+		sourceColumn: profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column order_status
+		dataType: string
+		lineageTag: 1cd39d65-6bb7-4dfc-b6c7-6118e4734c68
+		summarizeBy: none
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'analytics fact_sales' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "shopsphere"),
+				    analytics_fact_sales = Source{[Schema="analytics",Item="fact_sales"]}[Data]
+				in
+				    analytics_fact_sales
+
+	annotation PBI_ResultType = Table
+

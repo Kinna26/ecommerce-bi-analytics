@@ -1,0 +1,136 @@
+table 'analytics dim_date'
+	lineageTag: 486aafc3-5f68-4e79-982b-53c8f85a411b
+
+	measure 'AOV YoY %' =
+			
+			VAR CurrentAOV = [AOV]
+			VAR PreviousAOV =
+			    CALCULATE(
+			        [AOV],
+			        DATEADD('analytics dim_date'[date], -1, YEAR)
+			    )
+			RETURN
+			    DIVIDE(CurrentAOV - PreviousAOV, PreviousAOV)
+		formatString: 0.0%;-0.0%;-
+		lineageTag: 99e7b2ba-8768-464f-9320-9d0abdbe5613
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: be35e8ba-6b5c-4136-b7ac-1ce3c6469dbb
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4d8edbb6-5e82-493a-958a-0de22ea13c0a
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: 616fc2ff-7166-4b7b-ac8c-b3ee7d0f309a
+			defaultHierarchy: LocalDateTable_8bae7c7a-8999-40c9-a0d2-248f66cd876a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 491a31fa-4f34-4e89-aa49-ab2f56e67f24
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c6d25e6-d306-44d4-920f-31ee1feac629
+		summarizeBy: sum
+		sourceColumn: quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: bd18dd0c-8bf1-4be3-a54f-a9d7c35a3a65
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		dataType: string
+		lineageTag: 56934758-ace9-42ae-9879-479f721c7706
+		summarizeBy: none
+		sourceColumn: month_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column week
+		dataType: int64
+		formatString: 0
+		lineageTag: 87372b4f-02df-4d80-be7d-88f8efb8228a
+		summarizeBy: sum
+		sourceColumn: week
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		dataType: int64
+		formatString: 0
+		lineageTag: d96e8b9c-7109-4bab-9d1f-01454ec557bc
+		summarizeBy: sum
+		sourceColumn: day
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name
+		dataType: string
+		lineageTag: c1cdc154-6629-4f06-80e9-04a606ea0224
+		summarizeBy: none
+		sourceColumn: day_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_weekend
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: cf7ec785-c37b-4150-a8f8-210198c2e0bd
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_year = FORMAT([date], "MMM yyyy")
+		dataType: string
+		lineageTag: bc1762d3-8e86-4376-833d-3deedd9ec4cd
+		summarizeBy: none
+		sortByColumn: month_sort
+
+	column month_sort = [year] * 100 + [month]
+		dataType: int64
+		formatString: 0
+		lineageTag: abe26a1b-54cc-41b4-946e-2a0beb6e0f7d
+		summarizeBy: none
+
+	partition 'analytics dim_date' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "shopsphere"),
+				    analytics_dim_date = Source{[Schema="analytics",Item="dim_date"]}[Data]
+				in
+				    analytics_dim_date
+
+	annotation PBI_ResultType = Table
+
